@@ -1,0 +1,9 @@
+
+State Machine - |raiz|controleSqrt:maquina_estado|estado_atual
+Name estado_atual.estado6 estado_atual.estado5 estado_atual.estado4 estado_atual.estado3 estado_atual.estado2 estado_atual.estado1 
+estado_atual.estado1 0 0 0 0 0 0 
+estado_atual.estado2 0 0 0 0 1 1 
+estado_atual.estado3 0 0 0 1 0 1 
+estado_atual.estado4 0 0 1 0 0 1 
+estado_atual.estado5 0 1 0 0 0 1 
+estado_atual.estado6 1 0 0 0 0 1 

@@ -1,0 +1,188 @@
+
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+
+
+entity controleSqrt is
+port(
+	rstsystem, c1out,clk : in std_logic;
+	m1ctrl, m2ctrl, m3ctrl, m4ctrl : out std_logic;  
+	m5ctrl : out std_logic_vector (1 downto 0);
+	r1wr, r1rd, r2wr, r2rd, r3wr, r3rd, r4wr, r4rd, r5wr, r5rd, r6wr, r6rd, r7wr, r7rd : out std_logic
+
+); end controleSqrt;
+
+
+architecture hardware of controleSqrt is 
+
+
+	type st is (estado1, estado2, estado3, estado4, estado5, estado6);
+	signal estado_atual, proximo_estado : st;
+	
+begin
+	
+	mudanca_estado : process (clk,rstsystem)
+	begin
+		 if rstsystem = '1' then estado_atual <= estado1;
+		elsif(clk'event and clk = '1') then
+			estado_atual <= proximo_estado;
+		end if;
+	end process;
+
+	maquina_estados : process (estado_atual, c1out)
+	begin
+		case (estado_atual) is
+			when estado1 =>			
+				r1wr <= '1';
+				r1rd <= '1';		
+			 	r2wr <= '1';
+				r2rd <= '1';		
+				r3wr <= '1';
+				r3rd <= '1';		
+			 	r4wr <= '1';
+				r4rd <= '1';
+				r5wr <= '1';
+				r5rd <= '0';		
+			 	r6wr <= '1';
+				r6rd <= '1';		
+				r7wr <= '1';
+				r7rd <= '1';		
+				m1ctrl <= '0';
+				m2ctrl <= '0';
+				m3ctrl <= '0';
+				m4ctrl <= '0';
+				m5ctrl <= "00"; 
+			
+		      proximo_estado <= estado2; 
+						
+			when estado2 =>	
+				r1wr <= '0';
+				r1rd <= '1';		
+			 	r2wr <= '0';
+				r2rd <= '1';		
+				r3wr <= '0';
+				r3rd <= '1';		
+			 	r4wr <= '0';
+				r4rd <= '1';
+				r5wr <= '0';
+				r5rd <= '0';		
+			 	r6wr <= '1';
+				r6rd <= '1';		
+				r7wr <= '0';
+				r7rd <= '0';		
+				m1ctrl <= '0';
+				m2ctrl <= '1';
+				m3ctrl <= '0';
+				m4ctrl <= '0';
+				m5ctrl <= "10"; 
+			
+				proximo_estado <= estado3; 
+				
+				
+	
+			
+			when estado3 =>
+				r1wr <= '0';
+				r1rd <= '1';		
+			 	r2wr <= '0';
+				r2rd <= '1';		
+				r3wr <= '0';
+				r3rd <= '1';		
+			 	r4wr <= '0';
+				r4rd <= '1';
+				r5wr <= '0';
+				r5rd <= '0';		
+			 	r6wr <= '0';
+				r6rd <= '1';		
+				r7wr <= '1';
+				r7rd <= '1';		
+				m1ctrl <= '0';
+				m2ctrl <= '0';
+				m3ctrl <= '1';
+				m4ctrl <= '1';
+				m5ctrl <= "01"; 
+		
+		      proximo_estado <= estado4; 
+				
+				
+				
+				
+				when estado4 =>
+				
+				
+				r1wr <= '0';
+				r1rd <= '1';		
+			 	r2wr <= '0';
+				r2rd <= '1';		
+				r3wr <= '0';
+				r3rd <= '1';		
+			 	r4wr <= '0';
+				r4rd <= '1';
+				r5wr <= '1';
+				r5rd <= '1';		
+			 	r6wr <= '0';
+				r6rd <= '1';		
+				r7wr <= '0';
+				r7rd <= '1';		
+				m1ctrl <= '1';
+				m2ctrl <= '0';
+				m3ctrl <= '0';
+				m4ctrl <= '1';
+				m5ctrl <= "00"; 
+						
+				
+				proximo_estado <= estado5; 
+				
+				
+			when estado5 =>
+				r1wr <= '0';
+				r1rd <= '1';		
+			 	r2wr <= '0';
+				r2rd <= '1';		
+				r3wr <= '0';
+				r3rd <= '1';		
+			 	r4wr <= '0';
+				r4rd <= '1';
+				r5wr <= '1';
+				r5rd <= '1';		
+			 	r6wr <= '0';
+				r6rd <= '1';		
+				r7wr <= '0';
+				r7rd <= '0';		
+				m1ctrl <= '1';
+				m2ctrl <= '0';
+				m3ctrl <= '0';
+				m4ctrl <= '0';
+				m5ctrl <= "00"; 
+				
+			
+				if (c1out ='1') then proximo_estado <= estado6;
+				else proximo_estado <= estado2;
+				end if;
+			
+			when estado6 =>
+				r1wr <= '0';
+				r1rd <= '0';		
+			 	r2wr <= '0';
+				r2rd <= '0';		
+				r3wr <= '0';
+				r3rd <= '0';		
+			 	r4wr <= '0';
+				r4rd <= '0';
+				r5wr <= '0';
+				r5rd <= '0';		
+			 	r6wr <= '0';
+				r6rd <= '1';		
+				r7wr <= '0';
+				r7rd <= '0';		
+				m1ctrl <= '0';
+				m2ctrl <= '0';
+				m3ctrl <= '0';
+				m4ctrl <= '0';
+				m5ctrl <= "00"; 
+				proximo_estado <= estado6;
+		end case;
+	end process; 
+end hardware;
